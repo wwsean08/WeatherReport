@@ -1,6 +1,7 @@
 package com.wwsean08.WeatherReport.pojo;
 
 import com.google.gson.annotations.SerializedName;
+import com.sun.glass.ui.SystemClipboard;
 
 /**
  * Created by wwsea_000 on 12/30/2015.
@@ -13,6 +14,8 @@ public class RabbitMQJson
     private float temp;
     @SerializedName("icon")
     private String icon;
+    @SerializedName("timestamp")
+    private long timestamp = System.currentTimeMillis();
 
     public String getLocation()
     {
