@@ -37,7 +37,7 @@ public class OnDemandRunner implements Runnable
         try
         {
             String queueName = channel.queueDeclare().getQueue();
-            channel.queueBind(queueName, "amq.topic", "weather_update");
+            channel.queueBind(queueName, "amq.topic", "update");
             Consumer consumer = new DefaultConsumer(channel)
             {
                 @Override

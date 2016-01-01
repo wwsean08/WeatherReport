@@ -12,7 +12,8 @@ public class Main
     public static void main(String[] args)
     {
         ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(2);
-        //Run an update every 15 minutes starting now
+        // Run an update every 15 minutes starting now, and watch for update
+        // requests
         try
         {
             threadPool.scheduleAtFixedRate(new ScheduledRunner(), 0, 15, TimeUnit.MINUTES);
