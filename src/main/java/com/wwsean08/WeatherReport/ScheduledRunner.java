@@ -15,12 +15,12 @@ import org.apache.http.util.EntityUtils;
 /**
  * Created by wwsea_000 on 12/30/2015.
  */
-public class Runner implements Runnable
+public class ScheduledRunner implements Runnable
 {
     Channel channel;
     String endpoint;
 
-    public Runner() throws Exception
+    public ScheduledRunner() throws Exception
     {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setUsername("admin");

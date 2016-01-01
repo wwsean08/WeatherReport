@@ -1,7 +1,6 @@
 package com.wwsean08.WeatherReport.pojo;
 
 import com.google.gson.annotations.SerializedName;
-import com.sun.glass.ui.SystemClipboard;
 
 /**
  * Created by wwsea_000 on 12/30/2015.

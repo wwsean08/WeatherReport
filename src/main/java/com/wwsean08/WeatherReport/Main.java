@@ -11,11 +11,12 @@ public class Main
 {
     public static void main(String[] args)
     {
-        ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(1);
+        ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(2);
         //Run an update every 15 minutes starting now
         try
         {
-            threadPool.scheduleAtFixedRate(new Runner(), 0, 15, TimeUnit.MINUTES);
+            threadPool.scheduleAtFixedRate(new ScheduledRunner(), 0, 15, TimeUnit.MINUTES);
+            threadPool.schedule(new OnDemandRunner(), 0, TimeUnit.MINUTES);
         }
         catch (Exception e)
         {
