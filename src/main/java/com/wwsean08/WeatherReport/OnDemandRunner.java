@@ -2,6 +2,7 @@ package com.wwsean08.WeatherReport;
 
 import com.google.gson.Gson;
 import com.rabbitmq.client.*;
+import com.wwsean08.WeatherReport.pojo.Config;
 import com.wwsean08.WeatherReport.pojo.RabbitMQJson;
 import com.wwsean08.WeatherReport.pojo.wunderground.WUnderground;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -20,12 +21,12 @@ public class OnDemandRunner implements Runnable
     Channel channel;
     String endpoint;
 
-    public OnDemandRunner() throws Exception
+    public OnDemandRunner(Config config) throws Exception
     {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setUsername("admin");
-        factory.setPassword("admin");
-        factory.setHost("10.0.0.142");
+        factory.setUsername(config.getRabbitmqUser());
+        factory.setPassword(config.getRabbitmqPassword());
+        factory.setHost(config.getRabbitmqServer());
         Connection connection = factory.newConnection();
         channel = connection.createChannel();
 
@@ -34,6 +35,7 @@ public class OnDemandRunner implements Runnable
 
     public void run()
     {
+        System.out.println("Initiating on-demand update");
         try
         {
             String queueName = channel.queueDeclare().getQueue();

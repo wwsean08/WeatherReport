@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.wwsean08.WeatherReport.pojo.Config;
 import com.wwsean08.WeatherReport.pojo.RabbitMQJson;
 import com.wwsean08.WeatherReport.pojo.wunderground.WUnderground;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -20,12 +21,12 @@ public class ScheduledRunner implements Runnable
     Channel channel;
     String endpoint;
 
-    public ScheduledRunner() throws Exception
+    public ScheduledRunner(Config config) throws Exception
     {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setUsername("admin");
-        factory.setPassword("admin");
-        factory.setHost("10.0.0.142");
+        factory.setUsername(config.getRabbitmqUser());
+        factory.setPassword(config.getRabbitmqPassword());
+        factory.setHost(config.getRabbitmqServer());
         Connection connection = factory.newConnection();
         channel = connection.createChannel();
 
@@ -36,6 +37,7 @@ public class ScheduledRunner implements Runnable
     {
         try
         {
+            System.out.println("Initiating scheduled update");
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(endpoint);
             CloseableHttpResponse response = httpClient.execute(httpGet);
