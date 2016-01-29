@@ -30,7 +30,7 @@ public class Main
         // requests
         try
         {
-            threadPool.scheduleAtFixedRate(new ScheduledRunner(config), 0,
+            threadPool.scheduleAtFixedRate(new WeatherRunner(config), 0,
                     config.getUpdateInterval(), TimeUnit.MINUTES);
             threadPool.schedule(new OnDemandRunner(config), 0, TimeUnit.MINUTES);
         }
@@ -54,22 +54,12 @@ public class Main
                     InputStream FIS = new FileInputStream(file);
                     Properties prop = new Properties();
                     prop.load(FIS);
-                    if (prop.containsKey("password"))
-                    {
-                        config.setRabbitmqPassword(prop.getProperty("password"));
-                    }
-                    if (prop.containsKey("username"))
-                    {
-                        config.setRabbitmqUser(prop.getProperty("username"));
-                    }
-                    if (prop.containsKey("server"))
-                    {
-                        config.setRabbitmqServer(prop.getProperty("server"));
-                    }
-                    if (prop.containsKey("refreshInterval"))
-                    {
-                        config.setUpdateInterval(Integer.parseInt(prop.getProperty("refreshInterval")));
-                    }
+                    config.setRabbitmqPassword(prop.getProperty(Constants.RMQ_PASS_KEY), config.getRabbitmqPassword());
+                    config.setRabbitmqUser(prop.getProperty(Constants.RMQ_USER_KEY), config.getRabbitmqUser());
+                    config.setRabbitmqServer(prop.getProperty(Constants.RMQ_SERVER_KEY), config.getRabbitmqServer());
+                    config.setUpdateInterval(Integer.parseInt(prop.getProperty(Constants.REFRESH_KEY)), config.getUpdateInterval());
+                    config.setState(prop.getProperty(Constants.STATE_KEY), config.getState());
+                    config.setCity(prop.getProperty(Constants.CITY_KEY), config.getCity());
                 }
                 catch (Exception e)
                 {

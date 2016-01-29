@@ -16,12 +16,12 @@ import org.apache.http.util.EntityUtils;
 /**
  * Created by wwsea_000 on 12/30/2015.
  */
-public class ScheduledRunner implements Runnable
+public class WeatherRunner implements Runnable
 {
     Channel channel;
     String endpoint;
 
-    public ScheduledRunner(Config config) throws Exception
+    public WeatherRunner(Config config) throws Exception
     {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setUsername(config.getRabbitmqUser());
@@ -30,9 +30,10 @@ public class ScheduledRunner implements Runnable
         Connection connection = factory.newConnection();
         channel = connection.createChannel();
 
-        endpoint = "http://api.wunderground.com/api/" + Key.getKEY() + "/conditions/q/WA/Seattle.json";
+        endpoint = "http://api.wunderground.com/api/" + Key.getKEY() + "/conditions/q/"+ config.getState() +"/" + config.getCity() + ".json";
     }
 
+    @Override
     public void run()
     {
         try

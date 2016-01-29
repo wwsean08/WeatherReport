@@ -26,6 +26,16 @@ public class Config
      */
     private int updateInterval = 15;
 
+    /**
+     * The state to get a weather report for, defaults to WA
+     */
+    private String state = "WA";
+
+    /**
+     * The city to get a weather report for, defaults to Seattle
+     */
+    private String city = "Seattle";
+
     public String getRabbitmqServer()
     {
         return rabbitmqServer;
@@ -64,5 +74,25 @@ public class Config
     public void setUpdateInterval(int updateInterval)
     {
         this.updateInterval = updateInterval;
+    }
+
+    public String getState()
+    {
+        return state;
+    }
+
+    public void setState(String state)
+    {
+        this.state = state;
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
     }
 }

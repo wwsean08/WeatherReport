@@ -19,18 +19,18 @@ import java.io.IOException;
 public class OnDemandRunner implements Runnable
 {
     Channel channel;
-    String endpoint;
+    final Config config;
+    final ExecutorService exec = Executors.newSingleThreadExecutor();
 
     public OnDemandRunner(Config config) throws Exception
     {
+        this.config = config;
         ConnectionFactory factory = new ConnectionFactory();
         factory.setUsername(config.getRabbitmqUser());
         factory.setPassword(config.getRabbitmqPassword());
         factory.setHost(config.getRabbitmqServer());
         Connection connection = factory.newConnection();
         channel = connection.createChannel();
-
-        endpoint = "http://api.wunderground.com/api/" + Key.getKEY() + "/conditions/q/WA/Seattle.json";
     }
 
     public void run()
@@ -47,16 +47,8 @@ public class OnDemandRunner implements Runnable
                                            AMQP.BasicProperties properties,
                                            byte[] body) throws IOException
                 {
-                    CloseableHttpClient httpClient = HttpClients.createDefault();
-                    HttpGet httpGet = new HttpGet(endpoint);
-                    CloseableHttpResponse response = httpClient.execute(httpGet);
-                    String responseString = EntityUtils.toString(response.getEntity());
-                    byte[] rabbitMQMessage = getRabbitMQMessage(responseString);
-                    response.close();
-                    httpClient.close();
-
-                    //Send the message to rabbitmq
-                    channel.basicPublish("amq.topic", "weather", null, rabbitMQMessage);
+                    Runnable runner = new WeatherRunner(config);
+                    exec.submit(runner);
                 }
             };
             channel.basicConsume(queueName, true, consumer);
@@ -65,19 +57,5 @@ public class OnDemandRunner implements Runnable
         {
             e.printStackTrace();
         }
-    }
-
-    private byte[] getRabbitMQMessage(String response)
-    {
-        byte[] result = null;
-        Gson GSON = new Gson();
-        WUnderground wunderground = GSON.fromJson(response, WUnderground.class);
-        RabbitMQJson json = new RabbitMQJson();
-        json.setIcon(wunderground.getIconURL());
-        json.setLocation(wunderground.getLocation());
-        json.setTemp(wunderground.getTemp());
-
-        result = GSON.toJson(json).getBytes();
-        return result;
     }
 }
