@@ -30,10 +30,10 @@ public class WeatherRunner implements Runnable
         Connection connection = factory.newConnection();
         channel = connection.createChannel();
 
-        endpoint = "http://api.wunderground.com/api/" + Key.getKEY() + "/conditions/q/"+ config.getState() +"/" + config.getCity() + ".json";
+        endpoint = "http://api.wunderground.com/api/" + Key.getKEY() + "/conditions/q/" + config.getState() + "/" +
+                   config.getCity() + ".json";
     }
 
-    @Override
     public void run()
     {
         try

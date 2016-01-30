@@ -12,6 +12,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by wwsea_000 on 12/31/2015.
@@ -47,8 +49,15 @@ public class OnDemandRunner implements Runnable
                                            AMQP.BasicProperties properties,
                                            byte[] body) throws IOException
                 {
-                    Runnable runner = new WeatherRunner(config);
-                    exec.submit(runner);
+                    try
+                    {
+                        Runnable runner = new WeatherRunner(config);
+                        exec.submit(runner);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             };
             channel.basicConsume(queueName, true, consumer);
