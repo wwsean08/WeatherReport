@@ -30,15 +30,16 @@ public class WeatherRunner implements Runnable
         Connection connection = factory.newConnection();
         channel = connection.createChannel();
 
-        endpoint = "http://api.wunderground.com/api/" + Key.getKEY() + "/conditions/q/" + config.getState() + "/" +
+        endpoint = "http://api.wunderground.com/api/" + config.getKey() + "/conditions/q/" + config.getState() + "/" +
                    config.getCity() + ".json";
+        System.out.println(endpoint);
     }
 
     public void run()
     {
         try
         {
-            System.out.println("Initiating scheduled update");
+            System.out.println("Updating weather");
             CloseableHttpClient httpClient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(endpoint);
             CloseableHttpResponse response = httpClient.execute(httpGet);

@@ -31,7 +31,7 @@ public class Main
         try
         {
             threadPool.scheduleAtFixedRate(new WeatherRunner(config), 0,
-                                           config.getUpdateInterval(), TimeUnit.MINUTES);
+                    config.getUpdateInterval(), TimeUnit.MINUTES);
             threadPool.schedule(new OnDemandRunner(config), 0, TimeUnit.MINUTES);
         }
         catch (Exception e)
@@ -61,6 +61,7 @@ public class Main
                             prop.getProperty(Constants.REFRESH_KEY, String.valueOf(config.getUpdateInterval()))));
                     config.setState(prop.getProperty(Constants.STATE_KEY, config.getState()));
                     config.setCity(prop.getProperty(Constants.CITY_KEY, config.getCity()));
+                    config.setKey(prop.getProperty(Constants.APIKEY_KEY, config.getKey()));
                 }
                 catch (Exception e)
                 {

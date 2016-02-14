@@ -36,6 +36,11 @@ public class Config
      */
     private String city = "Seattle";
 
+    /**
+     * The API key for accessing Weather Underground
+     */
+    private String key = null;
+
     public String getRabbitmqServer()
     {
         return rabbitmqServer;
@@ -94,5 +99,15 @@ public class Config
     public void setCity(String city)
     {
         this.city = city;
+    }
+
+    public String getKey()
+    {
+        return key;
+    }
+
+    public void setKey(String key)
+    {
+        this.key = key;
     }
 }

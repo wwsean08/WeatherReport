@@ -1,15 +1,7 @@
 package com.wwsean08.WeatherReport;
 
-import com.google.gson.Gson;
 import com.rabbitmq.client.*;
 import com.wwsean08.WeatherReport.pojo.Config;
-import com.wwsean08.WeatherReport.pojo.RabbitMQJson;
-import com.wwsean08.WeatherReport.pojo.wunderground.WUnderground;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -37,7 +29,6 @@ public class OnDemandRunner implements Runnable
 
     public void run()
     {
-        System.out.println("Initiating on-demand update");
         try
         {
             String queueName = channel.queueDeclare().getQueue();

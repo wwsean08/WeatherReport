@@ -11,4 +11,5 @@ public class Constants
     public static final String REFRESH_KEY = "refreshInterval";
     public static final String STATE_KEY = "state";
     public static final String CITY_KEY = "city";
+    public static final String APIKEY_KEY = "key";
 }
