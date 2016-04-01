@@ -19,6 +19,7 @@ This project depends on Java as well as Maven for compiling, once you have those
 3. To start up (assuming java is in your PATH environment variable) run `java -jar WeatherReport-<VERSION>.jar myProperties.properties` where myProperties.properties is the name of the properties file you created in step 2.
 
 ##Plans
+* Get better images for the weather status.
 * Add severe weather alerts when they exist.
 * Create automation for installation in either Ansible or Puppet.
 * Expose more config options around where the messages go in RabbitMQ?
