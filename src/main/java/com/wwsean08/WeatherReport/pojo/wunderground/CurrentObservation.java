@@ -9,23 +9,32 @@ public class CurrentObservation
 {
     @SerializedName("display_location")
     private DisplayLocation location;
+    @SerializedName("weather")
+    private String weatherCondition;
     @SerializedName("icon_url")
     private String iconURL;
     @SerializedName("temp_f")
     private float temp;
+    @SerializedName("local_epoch")
+    private long localEpochTime;
+
 
     public DisplayLocation getLocation()
     {
         return location;
     }
 
-    public String getIconURL()
+    public String getWeatherCondition()
     {
-        return iconURL;
+        return weatherCondition;
     }
 
     public float getTemp()
     {
         return temp;
     }
+
+    public long getLocalEpochTime() { return localEpochTime;}
+
+    public String getIconURL() { return iconURL; }
 }

@@ -13,6 +13,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.sql.Date;
+import java.time.Instant;
+import java.util.Calendar;
+
 /**
  * Created by wwsea_000 on 12/30/2015.
  */
@@ -31,7 +35,7 @@ public class WeatherRunner implements Runnable
         channel = connection.createChannel();
 
         endpoint = "http://api.wunderground.com/api/" + config.getKey() + "/conditions/q/" + config.getState() + "/" +
-                   config.getCity() + ".json";
+                config.getCity() + ".json";
         System.out.println(endpoint);
     }
 
@@ -69,5 +73,34 @@ public class WeatherRunner implements Runnable
 
         result = GSON.toJson(json).getBytes();
         return result;
+    }
+
+    /**
+     * Assumptions:
+     * Sunrise: 6am
+     * Sunset: 7pm
+     * Will get the proper icon based on the time and conditions
+     *
+     * @param condition
+     * @param localEpoch
+     * @return
+     */
+    private String parseIcon(String condition, long localEpoch)
+    {
+        String iconURL = null;
+        Calendar time = Calendar.getInstance();
+        time.setTime(Date.from(Instant.ofEpochSecond(localEpoch)));
+        int hourOfDay = time.get(Calendar.HOUR_OF_DAY);
+        if (hourOfDay < 5 || hourOfDay > 18)
+        {
+            //"Night icons"
+
+        }
+        else
+        {
+            //"Day icons"
+
+        }
+        return iconURL;
     }
 }
